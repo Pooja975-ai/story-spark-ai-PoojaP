@@ -26,6 +26,8 @@ import EmailValidationComponent from "./components/email_validation/email.valida
 import { USER_ROLE } from "./constants/role";
 import PostListsComponent from "./components/dashboard/posts/post_lists.component";
 import ProfileComponent from "./components/dashboard/profile/profile.component";
+import Contact from "./components/contactus/contactus";
+
 
 const ProtectedRoute = ({
   element,
@@ -154,6 +156,7 @@ function App() {
         <Route path="/explore" element={<ExploreComponent />} />
         <Route path="/post/:id" element={<PostDetailsComponent />} />
         <Route path="*" element={<NotFoundComponent />} />
+        <Route path ="/contact" element={<Contact/>} />
       </Routes>
     </Router>
   );

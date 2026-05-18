@@ -39,14 +39,7 @@ const FooterComponent = () => {
                 </a>
               </li>
 
-              <li>
-                <a
-                  href="#"
-                  className="text-base text-gray-400 hover:text-white transition-colors duration-200"
-                >
-                  Contact
-                </a>
-              </li>
+
             </ul>
           </div>
           {/* Resources Section */}
