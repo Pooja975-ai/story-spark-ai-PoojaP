@@ -17,6 +17,9 @@ type Inputs = {
   prompt: string;
 };
 
+const MAX_PROMPT_LENGTH = 2000;
+const WARN_THRESHOLD = 0.85;
+
 const StoriesComponent = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -123,8 +126,6 @@ const StoriesComponent = () => {
     }
   };
 
-
-
   const handleClearPrompt = () => {
     setTextareaValue("");
     setSelectedPrompt("");
@@ -133,6 +134,9 @@ const StoriesComponent = () => {
       inputRef.current.focus();
     }
   };
+
+  const isOverLimit = textareaValue.length >= MAX_PROMPT_LENGTH;
+  const isNearLimit = textareaValue.length >= MAX_PROMPT_LENGTH * WARN_THRESHOLD;
 
   return (
     <div className="bg-gradient-to-br animate-gradient-slow min-h-screen">
@@ -207,23 +211,31 @@ const StoriesComponent = () => {
                         type="button"
                         onClick={() => setSelectedGenre(selectedGenre === genre ? "" : genre)}
                         className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 ${selectedGenre === genre
-                            ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/30"
-                            : "bg-white/10 text-gray-400 hover:bg-white/20 hover:text-gray-200"
+                          ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/30"
+                          : "bg-white/10 text-gray-400 hover:bg-white/20 hover:text-gray-200"
                           }`}
                       >
                         {genre}
                       </button>
                     ))}
                   </div>
+
                   <div className="relative">
                     <textarea
                       {...register("prompt")}
                       ref={inputRef}
-                      className="w-full h-32 sm:h-40 resize-none border-none outline-none bg-transparent text-gray-300 focus:ring-0 text-lg leading-relaxed tracking-wide placeholder:italic placeholder:text-gray-500 pr-10"
+                      className={`w-full h-32 sm:h-40 resize-none border-none outline-none bg-transparent text-gray-300 focus:ring-0 text-lg leading-relaxed tracking-wide placeholder:italic placeholder:text-gray-500 pr-10 transition-colors duration-200 ${
+                        isOverLimit
+                          ? "ring-1 ring-red-500 rounded"
+                          : isNearLimit
+                          ? "ring-1 ring-yellow-400 rounded"
+                          : ""
+                      }`}
                       placeholder="Every great story begins with a single idea. What's yours?"
                       value={textareaValue}
+                      maxLength={MAX_PROMPT_LENGTH}
                       onChange={(e) => setTextareaValue(e.target.value)}
-                    ></textarea>
+                    />
 
                     {textareaValue.length > 0 && (
                       <button
@@ -248,7 +260,34 @@ const StoriesComponent = () => {
                         </svg>
                       </button>
                     )}
+
+                    {/* Character count row */}
+                    <div className="flex items-center justify-between mt-1 px-1">
+                      {isOverLimit ? (
+                        <p className="text-xs text-red-400 flex items-center gap-1">
+                          <span>⚠</span> Character limit reached — generate is disabled
+                        </p>
+                      ) : isNearLimit ? (
+                        <p className="text-xs text-yellow-400 flex items-center gap-1">
+                          <span>⚠</span> {MAX_PROMPT_LENGTH - textareaValue.length} characters remaining
+                        </p>
+                      ) : (
+                        <span />
+                      )}
+                      <span
+                        className={`text-xs tabular-nums ml-auto ${
+                          isOverLimit
+                            ? "text-red-400 font-medium"
+                            : isNearLimit
+                            ? "text-yellow-400"
+                            : "text-gray-500"
+                        }`}
+                      >
+                        {textareaValue.length} / {MAX_PROMPT_LENGTH}
+                      </span>
+                    </div>
                   </div>
+
                   <p className="text-xs text-gray-500 mt-1 px-1">
                     💡 <span className="font-medium">Keyboard tip:</span> Press{" "}
                     <kbd className="px-1 py-0.5 text-xs bg-gray-700 rounded border border-gray-600">
@@ -260,14 +299,16 @@ const StoriesComponent = () => {
                     </kbd>{" "}
                     to generate your story.
                   </p>
+
                   <div className="flex justify-end mt-2 w-full">
                     <button
                       type="submit"
-                      disabled={loading}
-                      className={`rounded-lg bg-gradient-to-r from-blue-400 to-indigo-500 text-gray-200 px-6 py-3 font-semibold ${loading
+                      disabled={loading || isOverLimit}
+                      className={`rounded-lg bg-gradient-to-r from-blue-400 to-indigo-500 text-gray-200 px-6 py-3 font-semibold ${
+                        loading || isOverLimit
                           ? "opacity-50 cursor-not-allowed"
                           : "hover:shadow-lg hover:shadow-indigo-500/50"
-                        } transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 group cursor-pointer`}
+                      } transition-all duration-300 transform hover:scale-105 flex items-center space-x-2 group cursor-pointer`}
                     >
                       <i className="fas fa-wand-magic-sparkles text-xl transition-transform duration-300 group-hover:animate-wiggle"></i>
                       {loading ? "Generating..." : "Generate"}
@@ -276,6 +317,7 @@ const StoriesComponent = () => {
                 </form>
               </div>
             </div>
+
             <div className="w-full max-w-2xl m-auto mt-4">
               <h1 className="text-sm text-gray-500 mb-1">
                 Here are some example prompts you can refer to:-
@@ -318,6 +360,7 @@ const StoriesComponent = () => {
           </div>
         </div>
       </div>
+
       {loading && <StoryGeneratingAnimation />}
       <StoriesViewComponent
         stories={stories}
@@ -337,7 +380,7 @@ const StoriesComponent = () => {
                 Free Limit Reached
               </h3>
               <p className="text-gray-400 mb-6 leading-relaxed">
-                You’ve used all 3 free story generations. Login to continue
+                You've used all 3 free story generations. Login to continue
                 creating more stories.
               </p>
               <div className="flex flex-col gap-3">
