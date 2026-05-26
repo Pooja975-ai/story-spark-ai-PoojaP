@@ -720,4 +720,9 @@ html.dark .scroll-fab-btn:active {
   .magic-cursor-sparkle {
     transform: none;
   }
+  .magic-cursor-sparkle,
+  .magic-cursor-dot,
+  .magic-cursor-glow {
+    display: none;
+  }
 }
