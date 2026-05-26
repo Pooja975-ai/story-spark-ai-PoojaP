@@ -37,26 +37,43 @@ const createComment = async (
 };
 
 const getCommentsByPostId = async (postId: string) => {
-  const comments = await Comment.find({ postId, parentCommentId: null })
+  const allComments = (await Comment.find({ postId })
     .populate("userId", "name email")
-    .populate({
-      path: "likes",
-    })
-    .sort({ createdAt: -1 });
-  const commentsWithReplies = await Promise.all(
-    comments.map(async (comment) => {
-      const replies = await Comment.find({ parentCommentId: comment._id })
-        .populate("userId", "name email")
-        .populate({ path: "likes" })
-        .sort({ createdAt: 1 });
-      return {
-        ...comment.toObject(),
-        replies,
-      };
-    })
-  );
-  const totalComments = await Comment.countDocuments({ postId });
-  return { comments: commentsWithReplies, totalComments };
+    .populate("likes")
+    .sort({ createdAt: -1 })
+    .lean()) as any[];
+
+  const totalComments = allComments.length;
+
+  const topLevelComments: any[] = [];
+  const replyMap = new Map<string, any[]>();
+
+  // Distribute comments into top-level list and replies map
+  for (const comment of allComments) {
+    if (!comment.parentCommentId) {
+      comment.replies = [];
+      topLevelComments.push(comment);
+    } else {
+      const parentIdStr = comment.parentCommentId.toString();
+      if (!replyMap.has(parentIdStr)) {
+        replyMap.set(parentIdStr, []);
+      }
+      replyMap.get(parentIdStr)!.push(comment);
+    }
+  }
+
+  // Attach replies to their corresponding top-level comments and sort them chronologically (createdAt: 1)
+  for (const comment of topLevelComments) {
+    const idStr = comment._id.toString();
+    const replies = replyMap.get(idStr) || [];
+    // Sort replies in ascending chronological order
+    replies.sort(
+      (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
+    comment.replies = replies;
+  }
+
+  return { comments: topLevelComments, totalComments };
 };
 
 const toggleCommentLike = async (commentId: string, token: ITokenPayload) => {
