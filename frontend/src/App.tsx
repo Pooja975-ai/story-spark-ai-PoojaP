@@ -3,6 +3,7 @@ import { JSX } from "react";
 import WritingAssistantComponent from "./components/writing-assistant/writing_assistant.component";
 import CollabHome from "./components/collab/CollabHome";
 import CollabRoom from "./components/collab/CollabRoom";
+import AnalyticsDashboard from "./components/analytics/AnalyticsDashboard";
 import {
   BrowserRouter as Router,
   Routes,
@@ -124,7 +125,7 @@ function App() {
           element={
             <ProtectedRoute
               element={<DashboardLayout />}
-              allowedRoles={[USER_ROLE.ADMIN]}
+              allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.WRITER, USER_ROLE.USER]}
             />
           }
         >
@@ -133,7 +134,7 @@ function App() {
             element={
               <ProtectedRoute
                 element={<DashboardComponent />}
-                allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN]}
+                allowedRoles={[USER_ROLE.ADMIN, USER_ROLE.SUPER_ADMIN, USER_ROLE.WRITER, USER_ROLE.USER]}
               />
             }
           />
@@ -452,6 +453,7 @@ function App() {
             </RootLayout>
           }
         />
+        <Route path="/analytics" element={<AnalyticsDashboard />} />
         <Route path="/collab" element={<CollabHome />} />
         <Route path="/collab/:roomId" element={<CollabRoom />} />
         <Route

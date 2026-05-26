@@ -6,11 +6,8 @@ import SSProfile from "../../ui-component/ss-profile/ss-profile";
 import { useNavigate } from "react-router-dom";
 import BookmarkButton from "../../BookmarkButton";
 
-import {
-  FaTwitter,
-  FaLinkedin,
-  FaEnvelope,
-} from "react-icons/fa";
+import { FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const FeatureComponent = () => {
   const { data, isLoading } = useGetFeaturedListsQuery(undefined);
@@ -18,7 +15,9 @@ const FeatureComponent = () => {
 
   const calculateReadingTime = (content: string): number => {
     if (!content) return 1;
+
     const words = content.trim().split(/\s+/).length;
+
     return Math.max(1, Math.ceil(words / 200));
   };
 
@@ -72,16 +71,21 @@ const FeatureComponent = () => {
                             <span className="text-xs text-slate-600">•</span>
                             <p className="text-xs font-medium text-indigo-300">
                               {calculateReadingTime(post.content)} min read
+
                         <div className="ml-4">
                           <p className="text-sm font-medium text-slate-600 dark:text-gray-400">
                             {post.author?.name || "Unknown User"}
                           </p>
+
                           <div className="flex items-center gap-2 mt-0.5">
                             <p className="text-xs text-slate-500 dark:text-gray-500">
                               {formatDateShort(post.createdAt)}
                             </p>
-                            <span className="text-slate-400 dark:text-gray-600 text-xs">•</span>
-                            {/* ⏱️ Dynamic Reading Time Badging */}
+
+                            <span className="text-slate-400 dark:text-gray-600 text-xs">
+                              •
+                            </span>
+
                             <p className="text-xs text-purple-400 font-medium">
                               ⏱️ {calculateReadingTime(post.content)} min read
                             </p>
@@ -90,6 +94,10 @@ const FeatureComponent = () => {
                       </div>
 
                       <div onClick={(e) => e.stopPropagation()} className="relative z-10">
+                      <div
+                        onClick={(e) => e.stopPropagation()}
+                        className="relative z-10"
+                      >
                         <BookmarkButton
                           storyId={post._id}
                           bookmarks={post.bookmarks}
@@ -124,6 +132,9 @@ const FeatureComponent = () => {
                       </span>
                       <span className="flex items-center gap-1">
                         <i className="far fa-comment"></i>
+
+                      <span className="flex items-center">
+                        <i className="far fa-comment mr-1"></i>
                         {post.commentsCount ?? 0}
                       </span>
                     </div>
@@ -131,18 +142,24 @@ const FeatureComponent = () => {
                     <div className="flex items-center gap-4 text-slate-400">
                     <div className="flex items-center gap-4 text-slate-500 dark:text-gray-400">
                       <a
-                        href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(post.title || "")}`}
+                        href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                          postUrl
+                        )}&text=${encodeURIComponent(post.title || "")}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         title="Share on Twitter"
                         className="motion-icon hover:-translate-y-0.5 hover:text-sky-400"
+                        title="Share on X"
+                        className="motion-icon hover:text-sky-400 hover:-translate-y-0.5"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <FaTwitter size={16} />
+                        <FaXTwitter size={16} />
                       </a>
 
                       <a
-                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`}
+                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                          postUrl
+                        )}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         title="Share on LinkedIn"
@@ -153,7 +170,14 @@ const FeatureComponent = () => {
                       </a>
 
                       <a
-                        href={`mailto:?subject=${encodeURIComponent(post.title || "")}&body=${encodeURIComponent(`${(post.content || "").slice(0, 120)}...\n\nRead more: ${postUrl}`)}`}
+                        href={`mailto:?subject=${encodeURIComponent(
+                          post.title || ""
+                        )}&body=${encodeURIComponent(
+                          `${(post.content || "").slice(
+                            0,
+                            120
+                          )}...\n\nRead more: ${postUrl}`
+                        )}`}
                         title="Share via Email"
                         className="motion-icon hover:-translate-y-0.5 hover:text-red-400"
                         onClick={(e) => e.stopPropagation()}

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { ChangeEvent, FormEvent } from "react";
-import emailjs from "@emailjs/browser";
+import { instance as axios } from "../../helpers/axios/axionInstance";
+import { getBaseUrl } from "../../helpers/config";
 
 type FormData = {
   fullname: string;
@@ -18,15 +19,12 @@ const INITIAL_FORM_DATA: FormData = {
   message: "",
 };
 
-const SERVICE_KEY = import.meta.env.VITE_SERVICE_KEY ?? "";
-const TEMPLATE_KEY = import.meta.env.VITE_TEMPLATE_KEY ?? "";
-const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY ?? "";
-
 export default function Contact() {
   const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const isSubmittingRef = useRef(false);
 
   const changeHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -71,41 +69,45 @@ export default function Contact() {
     e: FormEvent<HTMLFormElement>,
   ): Promise<void> => {
     e.preventDefault();
-    if (loading) return;
 
-    setError("");
-    setSuccess(false);
-
-    const isValid = validateForm();
-    if (!isValid) return;
-
-    if (!SERVICE_KEY || !TEMPLATE_KEY || !PUBLIC_KEY) {
-      setError("Email service is currently unavailable. Please try again later.");
-      return;
-    }
-
-    setLoading(true);
+    // 1. TRUE synchronous lock: absolute first priority to block rapid clicks/spam
+    if (isSubmittingRef.current) return;
+    isSubmittingRef.current = true;
 
     try {
-      await emailjs.send(
-        SERVICE_KEY,
-        TEMPLATE_KEY,
-        {
-          fullname: formData.fullname.trim(),
-          email: formData.email.trim(),
-          subject: formData.subject.trim(),
-          message: formData.message.trim(),
-        },
-        PUBLIC_KEY,
-      );
+      // 2. Clear state BEFORE any async gaps to prevent stale UI
+      setError("");
+      setSuccess(false);
 
-      setSuccess(true);
-      setFormData(INITIAL_FORM_DATA);
+      if (!validateForm()) return;
+
+      setLoading(true);
+
+      const response = await axios.post(`${getBaseUrl()}/contact`, {
+        fullname: formData.fullname.trim(),
+        email: formData.email.trim(),
+        subject: formData.subject.trim(),
+        message: formData.message.trim(),
+      });
+
+      // 3. Backend response validation
+      if (response && response.data?.success) {
+        setSuccess(true);
+        setFormData(INITIAL_FORM_DATA);
+      } else {
+        setError("✕ Failed to send message. Please try again.");
+      }
     } catch (err: unknown) {
-      console.error("EmailJS Error:", err);
-      setError("✕ Failed to send message. Please check your connection.");
+      console.error("Contact Form Error:", err);
+      const message =
+        err instanceof Error
+          ? err.message
+          : "✕ Failed to send message. Please check your connection.";
+      setError(message);
     } finally {
+      // 4. Release BOTH the lock and the loading state in all scenarios
       setLoading(false);
+      isSubmittingRef.current = false;
     }
   };
 
