@@ -1,24 +1,14 @@
-<<<<<<< HEAD
-import { useEffect, useState, FC } from "react";
-=======
-﻿import { FC, useEffect, useState } from "react";
->>>>>>> upstream/main
+﻿import { useEffect, useState, FC } from "react";
 import { motion } from "framer-motion";
 import { HELP_SECTIONS } from "../help_center.utils";
 
 const HelpSidebar: FC = () => {
-<<<<<<< HEAD
   const [activeSection, setActiveSection] =
     useState<string>("categories");
 
 const HelpSidebar: FC = () => {
 const HelpSidebar = () => {
   const [activeSection, setActiveSection] = useState("help-categories");
-=======
-  const [activeSection, setActiveSection] = useState<string>(
-    HELP_SECTIONS[0]?.id ?? "categories"
-  );
->>>>>>> upstream/main
 
   useEffect(() => {
     const sectionIds = HELP_SECTIONS.map((section) => section.id);
@@ -34,7 +24,6 @@ const HelpSidebar = () => {
         }
       },
       {
-<<<<<<< HEAD
         rootMargin: "-15% 0px -45% 0px",
         threshold: [0.1, 0.2, 0.4, 0.6],
       }
@@ -51,12 +40,6 @@ const HelpSidebar = () => {
   }
 );
 
-=======
-        rootMargin: "-20% 0px -55% 0px",
-        threshold: [0.1, 0.25, 0.5],
-      }
-    );
->>>>>>> upstream/main
 
     sectionIds.forEach((id) => {
       const element = document.getElementById(id);
@@ -77,7 +60,6 @@ const HelpSidebar = () => {
     window.addEventListener("scroll", handleScroll);
 
     return () => {
-<<<<<<< HEAD
       sections.forEach((section) => {
       HELP_SECTIONS.forEach((section) => {
         const element = document.getElementById(section.id);
@@ -85,16 +67,12 @@ const HelpSidebar = () => {
           observer.unobserve(element);
         }
       });
-=======
-      observer.disconnect();
->>>>>>> upstream/main
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
-<<<<<<< HEAD
     if (element) {
       const yOffset = -100;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
@@ -104,13 +82,6 @@ const HelpSidebar = () => {
       });
       window.scrollTo({ top: y, behavior: "smooth" });
     }
-=======
-    if (!element) return;
-
-    const yOffset = -100;
-    const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-    window.scrollTo({ top: y, behavior: "smooth" });
->>>>>>> upstream/main
   };
 
   return (
@@ -264,7 +235,6 @@ const HelpSidebar = () => {
               })}
             </div>
 
-<<<<<<< HEAD
             {/* Bottom Support CTA Card */}
             <motion.div
               whileHover={{ y: -2 }}
@@ -338,11 +308,6 @@ const HelpSidebar = () => {
               aria-current={
                 activeSection === section.id ? "true" : undefined
               }
-=======
-            <motion.div
-              whileHover={{ y: -2 }}
-              className="relative overflow-hidden mt-8 rounded-3xl border border-blue-200 dark:border-indigo-500/20 bg-gradient-to-br from-blue-50 via-indigo-50 to-white dark:from-indigo-500/10 dark:via-blue-500/10 dark:to-slate-900/30 p-6"
->>>>>>> upstream/main
             >
               <div className="absolute top-0 right-0 w-28 h-28 bg-blue-500/10 rounded-full blur-3xl" />
               <div className="relative z-10">

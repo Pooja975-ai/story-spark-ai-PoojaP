@@ -1,4 +1,4 @@
-import { FC } from "react";
+﻿import { FC } from "react";
 import { motion } from "framer-motion";
 import { TroubleshootItem } from "../help_center.utils";
 import TroubleshootCard from "../troubleshoot_card/troubleshoot_card.component";
@@ -30,7 +30,6 @@ const Troubleshoot: FC<TroubleshootProps> = ({ items }) => {
         <p className="text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
           Diagnose and resolve common StorySparkAI issues quickly with guided
           troubleshooting steps and recommended fixes.
-<<<<<<< HEAD
         </p>
       </div>
 
@@ -151,8 +150,6 @@ const Troubleshoot: FC<TroubleshootProps> = ({ items }) => {
 
         <p className="mt-3 text-slate-600 dark:text-gray-400 max-w-2xl mx-auto">
           Diagnose and fix common setup and runtime issues.
-=======
->>>>>>> upstream/main
         </p>
       </div>
 

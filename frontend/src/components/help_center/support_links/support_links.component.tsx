@@ -1,4 +1,4 @@
-import { FC } from "react";
+﻿import { FC } from "react";
 import { motion } from "framer-motion";
 import { Support_Links } from "../help_center.utils";
 
@@ -85,13 +85,8 @@ const SupportLinks: FC<SupportLinksProps> = ({ links }) => {
         ))}
       </div>
 
-<<<<<<< HEAD
       {/* GitHub CTA Container */}
       <div className="flex justify-center mt-8">
-=======
-      <div className="mt-10 text-center">
-        {/* GitHub CTA */}
->>>>>>> upstream/main
         <a
           href="https://github.com"
           target="_blank"
@@ -101,7 +96,6 @@ const SupportLinks: FC<SupportLinksProps> = ({ links }) => {
           <i className="fa-brands fa-github text-base"></i>
           Contribute Now
         </a>
-<<<<<<< HEAD
           {/* GitHub CTA */}
           <a
             href="https://github.com"
@@ -114,8 +108,6 @@ const SupportLinks: FC<SupportLinksProps> = ({ links }) => {
           </a>
         ))}
 
-=======
->>>>>>> upstream/main
       </div>
     </motion.section>
   );

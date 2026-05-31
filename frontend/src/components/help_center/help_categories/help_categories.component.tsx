@@ -40,7 +40,6 @@ const HelpCategories: FC<HelpCategoriesProps> = ({ categories }) => {
         <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
           Browse support topics designed to help you quickly understand
           StorySparkAI features, workflows, and troubleshooting steps.
-<<<<<<< HEAD
         </p>
       </div>
 
@@ -157,8 +156,6 @@ const HelpCategories: FC<HelpCategoriesProps> = ({ categories }) => {
 
         <p className="mt-3 text-slate-600 dark:text-gray-400 max-w-2xl mx-auto">
           Jump into the topic you need — from your first story to contributing code.
-=======
->>>>>>> upstream/main
         </p>
       </div>
 

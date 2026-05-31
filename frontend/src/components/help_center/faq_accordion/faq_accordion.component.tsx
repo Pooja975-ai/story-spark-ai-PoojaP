@@ -47,10 +47,7 @@ const FAQAccordion: FC<FAQAccordionProps> = ({ items }) => {
       id="faq-section"
       className="scroll-mt-28 transition-colors duration-300"
     >
-<<<<<<< HEAD
       {/* Section Header */}
-=======
->>>>>>> upstream/main
       <div className="mb-10">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-indigo-500/20 bg-indigo-500/10 text-indigo-400 mb-4">
           <i className="fa-solid fa-circle-question" aria-hidden="true"></i>
@@ -67,7 +64,6 @@ const FAQAccordion: FC<FAQAccordionProps> = ({ items }) => {
         </p>
       </div>
 
-<<<<<<< HEAD
       {/* Accordion Wrapper / Empty State Handler */}
       {items.length === 0 ? (
         <div className="rounded-3xl border border-dashed border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/[0.03] p-12 text-center">
@@ -165,9 +161,6 @@ const FAQAccordion: FC<FAQAccordionProps> = ({ items }) => {
       </div>
 
       <div className="space-y-5 max-w-3xl mx-auto">
-=======
-      <div className="space-y-5">
->>>>>>> upstream/main
         {items.map((faq, index) => {
           const isOpen = openIndex === index;
           const buttonId = `${baseId}-faq-button-${faq.id}`;
@@ -216,7 +209,6 @@ const FAQAccordion: FC<FAQAccordionProps> = ({ items }) => {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden px-6 pb-6"
                   >
-<<<<<<< HEAD
                     <div className="px-6 pb-6">
                       <div className="rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 p-4 mt-2">
                         <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
@@ -260,17 +252,6 @@ const FAQAccordion: FC<FAQAccordionProps> = ({ items }) => {
                 </p>
               </div>
             </article>
-=======
-                    <div className="rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 p-4">
-                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.article>
->>>>>>> upstream/main
           );
         })}
       </div>

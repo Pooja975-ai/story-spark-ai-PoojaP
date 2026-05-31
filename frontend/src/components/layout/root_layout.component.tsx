@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+﻿import { ReactNode, useState } from "react";
 import { useLocation } from "react-router-dom";
 import NavListComponent from "../hero/nav_list.component";
 import CookieConsentBanner from "../cookie-consent/cookie-consent.component";
@@ -59,7 +59,6 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
 
   return (
     <div className={`flex flex-col min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100 ${!isAuthPage ? "pb-20 lg:pb-0" : ""}`}>
-<<<<<<< HEAD
       
       {/* Fixed: NavListComponent now receives all required configurations */}
       {!hideHeader && (
@@ -83,13 +82,6 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
       <CookieConsentBanner />
       <div className="flex-grow min-h-0">{children}</div>
       {!hideFooter && <FooterComponent />}
-=======
-      {!hideHeader && <NavListComponent />}
-      {!isAuthPage && <CookieConsentBanner />}
-      <div className="flex-grow min-h-0">{children}</div>
-      {!hideFooter && <FooterComponent />}
-      <ChatComponent />
->>>>>>> upstream/main
     </div>
   );
 };

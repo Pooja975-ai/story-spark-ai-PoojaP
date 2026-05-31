@@ -67,7 +67,6 @@ const HelpHero: FC<HelpHeroProps> = ({
             </div>
           </Link>
         </motion.div>
-<<<<<<< HEAD
 
         {/* Main Content */}
         <div className="text-center max-w-4xl mx-auto">
@@ -183,15 +182,6 @@ const HelpHero: FC<HelpHeroProps> = ({
           </motion.div>
         </div>
             className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:bg-clip-text dark:text-transparent dark:bg-gradient-to-r dark:from-gray-200 dark:via-blue-400 dark:to-indigo-400 mb-6 tracking-tight"
-=======
-
-        <div className="max-w-3xl mx-auto py-8">
-          <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: 35 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
->>>>>>> upstream/main
           >
             <div className="inline-flex items-center justify-center mx-auto px-4 py-1.5 mb-6 rounded-full border border-indigo-200 dark:border-white/20 bg-indigo-100 dark:bg-blue-500/20 text-indigo-700 dark:text-white shadow-sm">
               <span className="text-sm font-medium">SUPPORT &amp; GUIDANCE</span>

@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-import { FC, useRef, useState, ReactNode } from "react"; 
+﻿import { FC, useRef, useState, ReactNode } from "react"; 
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
 // FIX: Removed the broken local file imports and added inline fallback stubs below
@@ -303,10 +302,6 @@ const NavListComponent: FC<NavListComponentProps> = ({
       </div>
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-=======
-import React, { useState, useRef } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
->>>>>>> upstream/main
 import { isLoggedIn, removeUserInfo } from "../../services/auth.service";
 import ThemeToggle from "../theme/theme_toggle.component";
 
@@ -566,9 +561,5 @@ const NavList = () => {
   );
 };
 
-<<<<<<< HEAD
 export default NavListComponent;
 export default NavListComponent;
-=======
-export default NavList;
->>>>>>> upstream/main
