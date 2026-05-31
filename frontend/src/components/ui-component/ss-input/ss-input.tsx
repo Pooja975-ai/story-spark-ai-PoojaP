@@ -46,7 +46,7 @@ const inputType =
       </label>
       <div className="relative mt-2 w-full min-w-0">
         {icon && (
-          <span className="absolute inset-y-0 left-0 pl-2 flex items-center text-gray-500">
+          <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
             <i className={icon}></i>
           </span>
         )}
@@ -68,7 +68,13 @@ const inputType =
   <button
     type="button"
     onClick={() => setShowPassword(!showPassword)}
-    className="absolute inset-y-0 -right-5 flex items-center text-gray-500"
+
+    className="absolute inset-y-0 right-2 flex items-center text-gray-500"
+
+    
+    aria-label={showPassword ? "Hide password" : "Show password"}
+    title={showPassword ? "Hide password" : "Show password"}
+
   >
     <i className={showPassword ? "fi fi-rr-eye" : "fi fi-rr-eye-crossed"}></i>
   </button>
