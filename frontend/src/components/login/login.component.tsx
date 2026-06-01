@@ -186,55 +186,49 @@ const LoginComponent = () => {
 
           <div className="absolute inset-0 bg-black/60"></div>
 
-          <form
-            className="w-full space-y-5 "
-            onSubmit={handleSubmit(onSubmit)}
-            >
+         <form
+  className="w-full space-y-5"
+  onSubmit={handleSubmit(onSubmit)}
+>
+  <SSInput
+    label="Email address"
+    name="email"
+    type="email"
+    placeholder="Enter your email"
+    required={true}
+    icon="fi fi-rr-envelope"
+    register={register}
+    validation={{ required: "Email is required" }}
+    error={errors.email}
+  />
 
-          {/* Added w-full to the form */}
+  <SSInput
+    label="Password"
+    name="password"
+    type="password"
+    placeholder="Enter your password"
+    required={true}
+    icon="fi fi-rr-lock"
+    register={register}
+    validation={{ required: "Password is required" }}
+    error={errors.password}
+  />
 
-          <form className="space-y-5 w-full" onSubmit={handleSubmit(onSubmit)}>
-            <SSInput
-              label="Email address"
-              name="email"
-              type="email"
-              placeholder="Enter your email"
-              required={true}
-              icon="fi fi-rr-envelope"
-              register={register}
-              validation={{ required: "Email is required" }}
-              error={errors.email}
-              />
+  <div className="flex justify-end -mt-2">
+    <a
+      href="/forgot-password"
+      className="text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors duration-200"
+    >
+      Forgot Password?
+    </a>
+  </div>
 
-            <SSInput
-              label="Password"
-              name="password"
-              type="password"
-              placeholder="Enter your password"
-              required={true}
-              icon="fi fi-rr-lock"
-              register={register}
-              validation={{ required: "Password is required" }}
-              error={errors.password}
-              />
-
-            <div className="flex justify-end -mt-2">
-              <a
-                href="/forgot-password"
-                className="text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors duration-200"
-                >
-                Forgot Password?
-              </a>
-            </div>
-
-            <SSButton
-              text="Sign In"
-              type="submit"
-              isLoading={isBusy}
-              />
-
-            <SSButton text="Sign In" type="submit" isLoading={isBusy} />
-          </form>
+  <SSButton
+    text="Sign In"
+    type="submit"
+    isLoading={isBusy}
+  />
+</form>
 
           <div className="mt-6 relative w-full">
             <div className="absolute inset-0 flex items-center w-full">
